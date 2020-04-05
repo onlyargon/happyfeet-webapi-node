@@ -26,18 +26,28 @@ module.exports.ValidateUser = async user => {
       });
 
       if (profile) {
+        var passObj = {
+          userId: user.id,
+          username: user.username,
+          isProfileCompleted: true,
+        };
         var obj = {
           Code: 0,
           Message: "Success",
-          Data: profile
+          Data: passObj,
         };
 
         return obj;
       } else {
+        var passObj = {
+          userId: user.id,
+          username: user.username,
+          isProfileCompleted: false,
+        };
         var obj = {
-          Code: 1,
-          Message: "User not found!",
-          Data: null
+          Code: 0,
+          Message: "Success",
+          Data: passObj,
         };
 
         return obj;
@@ -54,18 +64,28 @@ module.exports.ValidateUser = async user => {
       });
 
       if (profile) {
+        var passObj = {
+          userId: user.id,
+          username: user.username,
+          isProfileCompleted: true,
+        };
         var obj = {
           Code: 0,
           Message: "Success",
-          Data: profile
+          Data: passObj,
         };
 
         return obj;
       } else {
+        var passObj = {
+          userId: user.id,
+          username: user.username,
+          isProfileCompleted: false,
+        };
         var obj = {
-          Code: 1,
-          Message: "User not found!",
-          Data: null
+          Code: 0,
+          Message: "Success",
+          Data: passObj,
         };
 
         return obj;

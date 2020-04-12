@@ -8,25 +8,32 @@ const Design = db.seq.define(
         type: Sequelize.INTEGER
       },
       category: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "Men"
       },
       occasion: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "Casual"
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "Shoe"
       },
       size: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "UK 11"
       },
-      sole: {
-        type: Sequelize.STRING
+      soleColor: {
+        type: Sequelize.STRING,
+        defaultValue: "#fff"
       },
-      color: {
-        type: Sequelize.STRING
+      vampColor: {
+        type: Sequelize.STRING,
+        defaultValue: "#fff"
       },
-      lace: {
-        type: Sequelize.STRING
+      quaterColor: {
+        type: Sequelize.STRING,
+        defaultValue: "#fff"
       },
       attachment: {
         type: Sequelize.STRING

@@ -7,20 +7,19 @@ const Profile = require("../models/profileModel");
 const Address = require("../models/addressModel");
 
 // User
-module.exports.CreateUser = async user => {
-  
+module.exports.CreateUser = async (user) => {
   let username = user.basicInfo.username;
   var count = await User.count({
     where: {
-      username: username
-    }
+      username: username,
+    },
   });
 
   if (count > 0) {
     var obj = {
       Code: 1,
       Message: "Username already exist!",
-      Data: null
+      Data: null,
     };
 
     return obj;
@@ -37,7 +36,7 @@ module.exports.CreateUser = async user => {
         var obj = {
           Code: 0,
           Message: "Please login to continue!",
-          Data: null
+          Data: null,
         };
 
         return obj;
@@ -47,7 +46,7 @@ module.exports.CreateUser = async user => {
         var obj = {
           Code: 0,
           Message: "Please login to continue!",
-          Data: null
+          Data: null,
         };
       }
 
@@ -56,7 +55,7 @@ module.exports.CreateUser = async user => {
       var obj = {
         Code: 1,
         Message: "Something went wrong!",
-        Data: null
+        Data: null,
       };
 
       return obj;
@@ -64,27 +63,39 @@ module.exports.CreateUser = async user => {
   }
 };
 
-module.exports.UpdateUser = async user => {
-  var updatedProfile = await Profile.update(user.profile, {
+module.exports.UpdateUser = async (user) => {
+
+  var usr = await User.findOne({
     where: {
-      userId: user.profile.userId
-    }
+      id: user.basicInfo.userId,
+    },
   });
+
+  if (usr.userType == "Customer") {
+    var updatedProfile = await Profile.update(user.basicInfo, {
+      where: {
+        userId: user.basicInfo.userId,
+      },
+    });
+  } else {
+    var updatedProfile = await Company.update(user.basicInfo, {
+      where: {
+        userId: user.basicInfo.userId,
+      },
+    });
+  }
 
   var updateAddress = await Address.update(user.address, {
     where: {
-      userId: user.address.userId
-    }
+      userId: user.address.userId,
+    },
   });
 
   if (updatedProfile && updateAddress) {
     var obj = {
       Code: 0,
       Message: "User updated!",
-      Data: {
-        userProfile: updatedProfile,
-        userAddress: updateAddress
-      }
+      Data: null,
     };
 
     return obj;
@@ -92,14 +103,14 @@ module.exports.UpdateUser = async user => {
     var obj = {
       Code: 1,
       Message: "Something went wrong!",
-      Data: null
+      Data: null,
     };
 
     return obj;
   }
 };
 
-module.exports.DeleteUser = async user => {
+module.exports.DeleteUser = async (user) => {
   user.basicInfo.isDelete = true;
   user.basicInfo.isActive = false;
 
@@ -111,34 +122,111 @@ module.exports.DeleteUser = async user => {
 
   var _ = await User.update(user.basicInfo, {
     where: {
-      userId: user.basicInfo.userId
-    }
+      userId: user.basicInfo.userId,
+    },
   });
 
   var _ = await Profile.update(user.profile, {
     where: {
-      userId: user.profile.userId
-    }
+      userId: user.profile.userId,
+    },
   });
 
   var _ = await Address.update(user.address, {
     where: {
-      userId: user.address.userId
-    }
+      userId: user.address.userId,
+    },
   });
 
   var obj = {
     Code: 0,
     Message: "User has deleted!",
-    Data: null
+    Data: null,
   };
 
   return obj;
 };
 
-module.exports.GetUsers = async () => {};
+module.exports.GetUserProfile = async (obj) => {
+  console.log(obj);
+  var profile = await User.findOne({
+    where: {
+      id: obj.userId,
+    },
+  });
 
-module.exports.ValidateUser = async user => {
+  if (profile) {
+    if (profile.userType == "Customer") {
+      var uProf = await Profile.findOne({
+        where: {
+          userId: profile.id,
+        },
+      });
+
+      var address = await Address.findOne({
+        where: {
+          userId: profile.id,
+        },
+      });
+
+      if (uProf) {
+        var obj = {
+          Code: 0,
+          Message: "Success",
+          Data: {
+            basicInfo: uProf,
+            address: address,
+          },
+        };
+
+        return obj;
+      } else {
+        var obj = {
+          Code: 1,
+          Message: "Something went wrong!",
+          Data: null,
+        };
+
+        return obj;
+      }
+    } else {
+      var Prof = await Company.findOne({
+        where: {
+          userId: profile.id,
+        },
+      });
+
+      var address = await Address.findOne({
+        where: {
+          userId: profile.id,
+        },
+      });
+
+      if (Prof) {
+        var obj = {
+          Code: 0,
+          Message: "Success",
+          Data: {
+            basicInfo: Prof,
+            address: address,
+          },
+        };
+
+        return obj;
+      } else {
+        var obj = {
+          Code: 1,
+          Message: "Something went wrong!",
+          Data: null,
+        };
+
+        return obj;
+      }
+    }
+  }
+};
+
+module.exports.ValidateUser = async (user) => {
   let username = atob(user.networkStatus1);
   let password = atob(user.networkStatus2);
 
@@ -147,8 +235,8 @@ module.exports.ValidateUser = async user => {
       username: user.networkStatus1,
       password: user.networkStatus2,
       isActive: true,
-      isDeleted: false
-    }
+      isDeleted: false,
+    },
   });
 
   if (user) {
@@ -157,15 +245,15 @@ module.exports.ValidateUser = async user => {
         where: {
           userId: user.id,
           isActive: true,
-          isDeleted: false
-        }
+          isDeleted: false,
+        },
       });
 
       if (profile) {
         var obj = {
           Code: 0,
           Message: "Success",
-          Data: profile
+          Data: profile,
         };
 
         return obj;
@@ -173,7 +261,7 @@ module.exports.ValidateUser = async user => {
         var obj = {
           Code: 1,
           Message: "User not found!",
-          Data: null
+          Data: null,
         };
 
         return obj;
@@ -185,15 +273,15 @@ module.exports.ValidateUser = async user => {
         where: {
           userId: user.id,
           isActive: true,
-          isDeleted: false
-        }
+          isDeleted: false,
+        },
       });
 
       if (profile) {
         var obj = {
           Code: 0,
           Message: "Success",
-          Data: profile
+          Data: profile,
         };
 
         return obj;
@@ -201,7 +289,7 @@ module.exports.ValidateUser = async user => {
         var obj = {
           Code: 1,
           Message: "User not found!",
-          Data: null
+          Data: null,
         };
 
         return obj;
@@ -212,7 +300,7 @@ module.exports.ValidateUser = async user => {
   var obj = {
     Code: 1,
     Message: "Failed",
-    Data: null
+    Data: null,
   };
 
   return obj;

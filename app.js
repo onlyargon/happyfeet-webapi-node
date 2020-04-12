@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 
 var indexRouter = require('./routes/index');
@@ -12,6 +13,7 @@ var addressRouter = require('./routes/address');
 var ordersRouter = require('./routes/order');
 var designRouter = require('./routes/design');
 var authRouter = require('./routes/auth');
+
 
 var app = express();
 app.use(cors());

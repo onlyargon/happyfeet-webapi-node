@@ -16,6 +16,21 @@ router.post('/create', function(req, res, next) {
   });
 });
 
+router.post('/update', function(req, res, next) {
+  _service.UpdateUser(req.body)
+  .then(resp =>{
+    res.send(resp);
+  });
+});
+
+router.post('/get-profile-by-userId', function(req, res, next) {
+  console.log(req.body);
+  _service.GetUserProfile(req.body)
+  .then(resp =>{
+    res.send(resp);
+  });
+});
+
 router.post('/delete', function(req, res, next) {
   _service.DeleteUser(req.body)
   .then(resp =>{

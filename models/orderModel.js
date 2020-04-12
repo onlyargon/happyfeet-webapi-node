@@ -17,7 +17,8 @@ const Order = db.seq.define(
         type: Sequelize.STRING
       },
       orderStatus: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "Acceptance pending"
       },
       isOrderAccepted: {
         type: Sequelize.BOOLEAN,

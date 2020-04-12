@@ -1,5 +1,7 @@
 const Order = require("../models/orderModel");
 
+const designService = require("./designService");
+
 module.exports.CreateOrder = async obj => {
 
   var count = await Order.count();  
@@ -7,6 +9,14 @@ module.exports.CreateOrder = async obj => {
   var order = await Order.create(obj);
 
   if (order) {
+
+    var designObj = {
+      id : obj.designId,
+      userId : obj.userId
+    }
+
+    var res = await designService.DeleteDesign(designObj);
+    
     var obj = {
       Code: 0,
       Message: "Success!",

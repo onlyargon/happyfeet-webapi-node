@@ -35,6 +35,14 @@ const Design = db.seq.define(
         type: Sequelize.STRING,
         defaultValue: "#fff"
       },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
+      isOrderPlaced: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       attachment: {
         type: Sequelize.STRING
       },

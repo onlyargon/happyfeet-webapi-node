@@ -8,63 +8,44 @@ const Address = require("../models/addressModel");
 
 // User
 module.exports.CreateUser = async (user) => {
-  let username = user.basicInfo.username;
-  var count = await User.count({
-    where: {
-      username: username,
-    },
-  });
-
-  if (count > 0) {
+  try {
+    if (user.basicInfo.userType == "Customer") {
+      var createdProfile = await Profile.create(user.basicInfo);
+      var userAddress = await Address.create(user.address);
+  
+      var obj = {
+        Code: 0,
+        Message: "User profile updated!",
+        Data: null,
+      };
+  
+      return obj;
+    } else {
+      var createdProfile = await Company.create(user.basicInfo);
+      var userAddress = await Address.create(user.address);
+  
+      var obj = {
+        Code: 0,
+        Message: "Company profile updated!",
+        Data: null,
+      };
+  
+      return obj;
+    }
+  } catch (error) {
+    
     var obj = {
       Code: 1,
-      Message: "Username already exist!",
-      Data: null,
+      Message: "Somthing went wrong!",
+      Data: error,
     };
 
     return obj;
-  } else {
-    user.basicInfo.password = btoa(user.basicInfo.password);
-    user.basicInfo.userType = "Customer";
-    var createdUser = await User.create(user.basicInfo);
-    if (createdUser) {
-      user.profile.userId = createdUser.id;
-      user.address.userId = createdUser.id;
-      if (createdUser.userType == "Customer") {
-        var createdProfile = await Profile.create(user.profile);
 
-        var obj = {
-          Code: 0,
-          Message: "Please login to continue!",
-          Data: null,
-        };
-
-        return obj;
-      } else {
-        var createdProfile = await Company.create(user.profile);
-
-        var obj = {
-          Code: 0,
-          Message: "Please login to continue!",
-          Data: null,
-        };
-      }
-
-      var userAddress = await Address.create(user.address);
-    } else {
-      var obj = {
-        Code: 1,
-        Message: "Something went wrong!",
-        Data: null,
-      };
-
-      return obj;
-    }
   }
 };
 
 module.exports.UpdateUser = async (user) => {
-
   var usr = await User.findOne({
     where: {
       id: user.basicInfo.userId,
@@ -190,7 +171,7 @@ module.exports.GetUserProfile = async (obj) => {
         return obj;
       }
     } else {
-      var Prof = await Company.findOne({
+      var uProf = await Company.findOne({
         where: {
           userId: profile.id,
         },
@@ -202,12 +183,12 @@ module.exports.GetUserProfile = async (obj) => {
         },
       });
 
-      if (Prof) {
+      if (uProf) {
         var obj = {
           Code: 0,
           Message: "Success",
           Data: {
-            basicInfo: Prof,
+            basicInfo: uProf,
             address: address,
           },
         };

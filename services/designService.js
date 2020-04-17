@@ -23,10 +23,10 @@ module.exports.CreateDesign = async obj => {
 };
 
 module.exports.UpdateDesign = async obj => {
+  console.log(obj);
   var design = await Design.update(obj, {
     where: {
-      id: obj.id,
-      userId : obj.userId
+      id: obj.id
     }
   });
 
@@ -85,6 +85,7 @@ module.exports.GetAllDesign = async obj => {
       where: {
         isDeleted : false,
         isActive : true,
+        isOrderPlaced : false,
         userId : obj.userId
       }
     });
@@ -136,5 +137,4 @@ module.exports.GetDesignById = async obj => {
       return obj;
     }
 };
-
 

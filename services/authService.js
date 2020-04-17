@@ -29,6 +29,7 @@ module.exports.ValidateUser = async user => {
         var passObj = {
           userId: user.id,
           username: user.username,
+          userType : user.userType,
           isProfileCompleted: true,
         };
         var obj = {
@@ -42,6 +43,7 @@ module.exports.ValidateUser = async user => {
         var passObj = {
           userId: user.id,
           username: user.username,
+          userType : user.userType,
           isProfileCompleted: false,
         };
         var obj = {
@@ -55,6 +57,7 @@ module.exports.ValidateUser = async user => {
     }
 
     if (user.userType == "Company") {
+
       var profile = await Company.findOne({
         where: {
           userId: user.id,
@@ -67,6 +70,7 @@ module.exports.ValidateUser = async user => {
         var passObj = {
           userId: user.id,
           username: user.username,
+          userType : user.userType,
           isProfileCompleted: true,
         };
         var obj = {
@@ -80,6 +84,7 @@ module.exports.ValidateUser = async user => {
         var passObj = {
           userId: user.id,
           username: user.username,
+          userType : user.userType,
           isProfileCompleted: false,
         };
         var obj = {

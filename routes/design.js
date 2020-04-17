@@ -28,7 +28,7 @@ router.post("/create", function(req, res, next) {
   });
 
   router.post("/get-by-id", function(req, res, next) {
-    _service.GetAllDesignById(req.body).then(resp => {
+    _service.GetDesignById(req.body).then(resp => {
       res.send(resp);
     });
   });

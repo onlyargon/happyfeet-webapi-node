@@ -1,12 +1,14 @@
 const db = require('../_helper/dbConnection');
 const Sequelize = require('sequelize');
 
+const User = require('./userModel');
+
 const Profile = db.seq.define(
     'profile',
     {
-      userId: {
-        type: Sequelize.INTEGER
-      },
+      // userId: {
+      //   type: Sequelize.INTEGER
+      // },
       displayName: {
         type: Sequelize.STRING
       },
@@ -43,5 +45,8 @@ const Profile = db.seq.define(
   );
   
   
+  User.hasOne(Profile);
+  Profile.belongsTo(User);
+
   Profile.sync({ force: false });
   module.exports = Profile;

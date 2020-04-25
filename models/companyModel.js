@@ -1,12 +1,14 @@
 const db = require('../_helper/dbConnection');
 const Sequelize = require('sequelize');
 
+const User = require('./userModel');
+
 const Company = db.seq.define(
     'company',
     {
-      userId: {
-        type: Sequelize.INTEGER
-      },
+      // userId: {
+      //   type: Sequelize.INTEGER
+      // },
       companyName: {
         type: Sequelize.STRING
       },
@@ -36,6 +38,8 @@ const Company = db.seq.define(
     }
   );
   
+  User.hasOne(Company);
+  Company.belongsTo(User);
   
   Company.sync({ force: false });
   module.exports = Company;

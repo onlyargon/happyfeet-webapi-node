@@ -7,6 +7,9 @@ const Design = db.seq.define(
       userId: {
         type: Sequelize.INTEGER
       },
+      orderPrice: {
+        type: Sequelize.STRING
+      },
       category: {
         type: Sequelize.STRING,
         defaultValue: "Men"

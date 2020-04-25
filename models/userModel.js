@@ -29,4 +29,5 @@ const User = db.seq.define(
   
   
   User.sync({ force: false });
+
   module.exports = User;

@@ -1,12 +1,14 @@
 const db = require('../_helper/dbConnection');
 const Sequelize = require('sequelize');
 
+const User = require('./userModel');
+
 const Address = db.seq.define(
     'address',
     {
-      userId: {
-        type: Sequelize.INTEGER
-      },
+      // userId: {
+      //   type: Sequelize.INTEGER
+      // },
       addressLine1: {
         type: Sequelize.STRING
       },
@@ -39,6 +41,8 @@ const Address = db.seq.define(
     }
   );
   
+  User.hasOne(Address);
+  Address.belongsTo(User);
   
   Address.sync({ force: false });
   module.exports = Address;

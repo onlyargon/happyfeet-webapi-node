@@ -16,5 +16,5 @@ const CompanyLog = db.seq.define(
     }
   );
   
-  CompanyLog.sync({ force: false });
+  CompanyLog.sync({ force: false});
   module.exports = CompanyLog;

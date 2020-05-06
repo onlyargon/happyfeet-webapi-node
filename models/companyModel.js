@@ -41,5 +41,5 @@ const Company = db.seq.define(
   User.hasOne(Company);
   Company.belongsTo(User);
   
-  Company.sync({ force: false });
+  Company.sync({ force: false});
   module.exports = Company;

@@ -64,5 +64,5 @@ const Design = db.seq.define(
   );
   
   
-  Design.sync({ force: false });
+  Design.sync({ force: false});
   module.exports = Design;

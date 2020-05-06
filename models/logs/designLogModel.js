@@ -16,5 +16,5 @@ const DesignLog = db.seq.define(
     }
   );
   
-  DesignLog.sync({ force: false });
+  DesignLog.sync({ force: false});
   module.exports = DesignLog;

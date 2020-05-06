@@ -16,5 +16,5 @@ const OrderLog = db.seq.define(
     }
   );
   
-  OrderLog.sync({ force: false });
+  OrderLog.sync({ force: false});
   module.exports = OrderLog;

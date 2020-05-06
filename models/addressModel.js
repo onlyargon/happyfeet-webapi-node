@@ -44,5 +44,5 @@ const Address = db.seq.define(
   User.hasOne(Address);
   Address.belongsTo(User);
   
-  Address.sync({ force: false });
+  Address.sync({ force: false});
   module.exports = Address;

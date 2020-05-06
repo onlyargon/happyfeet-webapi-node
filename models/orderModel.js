@@ -11,9 +11,9 @@ const Order = db.seq.define(
       // userId: {
       //   type: Sequelize.INTEGER
       // },
-      // comId: {
-      //   type: Sequelize.INTEGER
-      // },
+      comId: {
+        type: Sequelize.INTEGER
+      },
       designId: {
         type: Sequelize.INTEGER
       },
@@ -67,5 +67,6 @@ const Order = db.seq.define(
   // Order.hasOne(Design);
   // Design.belongsTo(Order);
   
-  Order.sync({ force: false });
+  
+  Order.sync({ force: false});
   module.exports = Order;

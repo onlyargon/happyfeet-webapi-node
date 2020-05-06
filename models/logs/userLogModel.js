@@ -16,5 +16,5 @@ const UserLog = db.seq.define(
     }
   );
   
-  UserLog.sync({ force: false });
+  UserLog.sync({ force: false});
   module.exports = UserLog;

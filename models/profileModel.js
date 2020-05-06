@@ -48,5 +48,5 @@ const Profile = db.seq.define(
   User.hasOne(Profile);
   Profile.belongsTo(User);
 
-  Profile.sync({ force: false });
+  Profile.sync({ force: false});
   module.exports = Profile;

@@ -16,5 +16,5 @@ const ProfileLog = db.seq.define(
     }
   );
   
-  ProfileLog.sync({ force: false });
+  ProfileLog.sync({ force: false});
   module.exports = ProfileLog;

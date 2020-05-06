@@ -16,5 +16,5 @@ const AddressLog = db.seq.define(
     }
   );
   
-  AddressLog.sync({ force: false });
+  AddressLog.sync({ force: false});
   module.exports = AddressLog;

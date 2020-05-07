@@ -38,4 +38,11 @@ router.post('/delete', function(req, res, next) {
   });
 });
 
+router.post('/get-all-companies', function(req, res, next) {
+  _service.GetALlCompanies(req.body)
+  .then(resp =>{
+    res.send(resp);
+  });
+});
+
 module.exports = router;

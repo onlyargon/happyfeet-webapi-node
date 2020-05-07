@@ -286,3 +286,43 @@ module.exports.ValidateUser = async (user) => {
 
   return obj;
 };
+
+module.exports.GetALlCompanies = async () => {
+  var companies = await Company.findAll({
+    where: {
+      isActive : true,
+      isDeleted :false
+    },
+  });
+  
+  var responseList = [];
+  for(let com of companies){
+  var address = await Address.findOne({where:{
+    userId : com.userId
+  }});
+
+  responseList.push({
+    company : com,
+    address :address
+  })
+}
+
+
+  if (companies) {
+    var obj = {
+      Code: 0,
+      Message: "Success",
+      Data: responseList,
+    };
+
+    return obj;
+  } else {
+    var obj = {
+      Code: 1,
+      Message: "Something went wrong!",
+      Data: null,
+    };
+
+    return obj;
+  }
+};
